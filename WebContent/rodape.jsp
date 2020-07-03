@@ -7,9 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%= "Nome recebido: " + request.getParameter("nome") %>
-	
-
-	<%-- response.sendRedirect("http://www.uol.com.br"); --%>
+	<h3>rodape</h3>
+	<%--@ page isErrorPage="true" --%>
+	<%--= exception--%>
+	<%--=session.getAttribute("curso") --%>
 </body>
 </html>
