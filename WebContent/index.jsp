@@ -11,10 +11,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<c:set var="data" scope="page" value="${500*6 }"></c:set>
-<c:out value="${data}"></c:out>
-
 	<form action="LoginServlet" method="post">
 		Login:
 		<input type="text" id="login" name ="login">
@@ -22,7 +18,7 @@
 		Senha:
 		<input type="password" id="senha" name="senha">
 		<br>
-		<input type="submit" value="logar">
+		<input type="submit" value="Logar">
 	</form>
 </body>
 </html>
