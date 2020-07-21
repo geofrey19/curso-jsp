@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3>Acesso liberado</h3>
+	<h3>Acesso liberado</h3>
+	<a href="cadastroUsuario.jsp">Cadastro de usuários</a>
 </body>  
 </html>
