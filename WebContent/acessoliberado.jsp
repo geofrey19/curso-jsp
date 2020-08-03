@@ -10,6 +10,8 @@
 </head>
 <body>
 	<h3>Acesso liberado</h3>
-	<a href="cadastroUsuario.jsp">Cadastro de usuários</a>
+	<a href="salvarUsuario?acao=listartodos"><img
+							alt="cadastro de usuário" title="usuario" src="resources/img/user.jpg"
+							width="100px" height="100px"></a>
 </body>  
 </html>

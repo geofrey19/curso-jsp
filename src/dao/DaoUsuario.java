@@ -20,11 +20,14 @@ private Connection connection;
 	}
 
 	public void salvar(BeanCursoJsp usuario) {
-		String sql= "insert into usuario (login,senha) values(?,?)";
+		
 		try {
+			String sql= "insert into usuario (login,senha, nome, telefone) values(?,?,?,?)";
 			PreparedStatement insert = connection.prepareStatement(sql);
 			insert.setString(1, usuario.getLogin());
 			insert.setString(2, usuario.getSenha());
+			insert.setString(3, usuario.getNome());
+			insert.setString(4, usuario.getTelefone());
 			insert.execute();
 			connection.commit();
 		} catch (SQLException e) {
@@ -50,13 +53,15 @@ private Connection connection;
 			beanCursoJsp.setId(resultSet.getLong("id"));
 			beanCursoJsp.setLogin(resultSet.getString("login"));
 			beanCursoJsp.setSenha(resultSet.getString("senha"));
+			beanCursoJsp.setNome(resultSet.getString("nome"));
+			beanCursoJsp.setTelefone(resultSet.getString("telefone"));
 			listar.add(beanCursoJsp);
 		}
 		return listar;
 	}
 	
-	public void delete(String login){
-		String sql ="delete from usuario where login = '"+login+"'";
+	public void delete(String id){
+		String sql ="delete from usuario where id = '"+id+"'";
 		try {
 			PreparedStatement preparedStatment = connection.prepareStatement(sql);
 			preparedStatment.execute();
@@ -72,8 +77,8 @@ private Connection connection;
 		
 	}
 	
-	public BeanCursoJsp consultar(String login) throws SQLException {
-		String sql = "Select * from usuario where login='"+login+"'";
+	public BeanCursoJsp consultar(String id) throws SQLException {
+		String sql = "Select * from usuario where id='"+id+"'";
 		PreparedStatement preparedStatment = connection.prepareStatement(sql);
 		ResultSet resultSet = preparedStatment.executeQuery();
 		if(resultSet.next()) {
@@ -81,18 +86,53 @@ private Connection connection;
 			beanCursoJsp.setId(resultSet.getLong("id"));
 			beanCursoJsp.setLogin(resultSet.getString("login"));
 			beanCursoJsp.setSenha(resultSet.getString("senha"));
+			beanCursoJsp.setNome(resultSet.getString("nome"));
+			beanCursoJsp.setTelefone(resultSet.getString("telefone"));
 			return beanCursoJsp;
 		}
 		return null;
 	}
 
+	public boolean validarLogin(String login) throws SQLException {
+		String sql = "Select count(1) as qtd from usuario where login='"+login+"'";
+		PreparedStatement preparedStatment = connection.prepareStatement(sql);
+		ResultSet resultSet = preparedStatment.executeQuery();
+		if(resultSet.next()) {
+			return resultSet.getInt("qtd")<=0;/*Retorna true*/
+		}
+		
+		return false;
+	}
+	
+	public boolean validarLoginUpdate(String login, String id) throws SQLException {
+		String sql = "Select count(1) as qtd from usuario where login='"+login+"' and id <>"+id;
+		PreparedStatement preparedStatment = connection.prepareStatement(sql);
+		ResultSet resultSet = preparedStatment.executeQuery();
+		if(resultSet.next()) {
+			return resultSet.getInt("qtd")<=0;/*Retorna true*/
+		}
+		
+		return false;
+	}
+	
+	public boolean validarSenha(String senha) {
+		if(senha.length()>=3) {
+			return true;
+		}else {
+			return false;	
+		}
+		
+	}
+	
 	public void atualizar(BeanCursoJsp usuario) {
 		try {
-			String sql = "update usuario set login = ?, senha= ? where id = "+ usuario.getId();
+			String sql = "update usuario set login = ?, senha = ?, nome = ?, telefone = ? where id = "+ usuario.getId();
 			PreparedStatement preparedStatment;
 			preparedStatment = connection.prepareStatement(sql);
 			preparedStatment.setString(1, usuario.getLogin());
 			preparedStatment.setString(2, usuario.getSenha());
+			preparedStatment.setString(3, usuario.getNome());
+			preparedStatment.setString(4, usuario.getTelefone());
 			preparedStatment.executeUpdate();
 			connection.commit();
 		} catch (SQLException e) {
