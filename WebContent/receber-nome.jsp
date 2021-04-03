@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%= "Nome recebido: " + request.getParameter("nome") %>
+	<%--= "Nome recebido: " + request.getParameter("nome") --%>
 	
 
 	<%-- response.sendRedirect("http://www.uol.com.br"); --%>
